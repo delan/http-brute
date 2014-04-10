@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <sys/socket.h>
+#include <sys/syscall.h>
 #include <netdb.h>
 #include <semaphore.h>
 #include <list.h>
@@ -29,6 +30,7 @@ char *nextjob;
 
 int do_job(char *job)
 {
+	printf("%d\n", syscall(SYS_gettid));
 	int fd = socket(AF_INET, SOCK_STREAM, 0);
 	int ret = 0;
 	if(fd == -1)
@@ -62,8 +64,9 @@ int do_job(char *job)
 		ret = -1;
 		goto cleanup;
 	}
-	strtok(buffer, " ");
-	int response = atoi(strtok(NULL, " "));
+	char *toksave;
+	strtok_r(buffer, " ", &toksave);
+	int response = atoi(strtok_r(NULL, " ", &toksave));
 	if(response == 200)
 	{
 		size_t out_len;
