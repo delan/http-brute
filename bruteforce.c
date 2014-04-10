@@ -135,7 +135,7 @@ char next(char *str, int len)
 
 int main(int argc, char *argv[])
 {
-	if(argc != 6)
+	if(argc != 7)
 	{
 		fprintf(stderr, "Usage: %s <host> <port> <worker threads> <charset> <upper limit user (max 31)> <upper limit pass (max 31)>\n", argv[0]);
 		return 0;
