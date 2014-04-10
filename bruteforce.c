@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 {
 	if(argc != 7)
 	{
-		fprintf(stderr, "Usage: %s <host> <port> <worker threads> <charset> <upper limit user (max 31)> <upper limit pass (max 31)>\n", argv[0]);
+		fprintf(stderr, "Usage: %s <host> <port> <worker threads> <charset> <upper limit user (max 29) <upper limit pass (max 29)>\n", argv[0]);
 		return 0;
 	}
 
@@ -152,10 +152,10 @@ int main(int argc, char *argv[])
 		charset[argv[4][i]] = argv[4][i+1];
 	}
 	charset[charend] = '\0';
-	int max_size_u = atoi(argv[5]);
+	int max_size_u = atoi(argv[5]) + 2;
 	if(max_size_u > 31)
 		max_size_u = 31;
-	int max_size_p = atoi(argv[6]);
+	int max_size_p = atoi(argv[6]) + 2;
 	if(max_size_p > 31)
 		max_size_p = 31;
 
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 		password[0] = '\0';
 		while(next(password, max_size_p))
 		{
-			//queue_job(username, password);
+			queue_job(username, password);
 			printf("%s:%s\n", username, password);
 		}
 	}
